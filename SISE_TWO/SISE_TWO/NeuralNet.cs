@@ -60,8 +60,7 @@ namespace SISE_TWO
 
         public void Run(int iter)
         {
-            GenerateRandom();
-            for (int i = 0; i < iter; i++)
+            for (int i = 0; i <= iter; i++)
             {
                 double error = 0.0;
                 for (int j = 0; j < numInputData; j++)
@@ -76,8 +75,7 @@ namespace SISE_TWO
                 for (int j = 0; j < numInputData; j++)
                 {
                     if (i == 0 || i == 100 || i % 2000 == 0)
-                        Console.WriteLine("Epoka: " + i + " poczatkowa: " + inputData[j].ToString("0.0000") + " oczekiwana: " + expectedOutput[j].ToString("0.0000") + " otrzymana: " + outputData[j].ToString("0.0000") + " błąd względny " + Math.Abs(((expectedOutput[j] - outputData[j]) / outputData[j]) * 100).ToString("0.0000"));
-
+                        Console.WriteLine("Epoch: " + i + " initial input: " + inputData[j].ToString("0.0000") + " expected: " + expectedOutput[j].ToString("0.0000") + " computed: " + outputData[j].ToString("0.0000") + " error " + Math.Abs(((expectedOutput[j] - outputData[j]) / outputData[j]) * 100).ToString("0.0000"));
                 }
             }
         }
