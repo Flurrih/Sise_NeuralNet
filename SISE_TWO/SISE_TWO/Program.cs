@@ -8,9 +8,20 @@ namespace CodingBackProp
         {
             NeuralNet network = new NeuralNet();
             network.GenerateRandom();
-            network.Run(10000);
+            network.Run(50000);
+
+            double x;
+
+            while (true)
+            {
+                Double.TryParse(Console.ReadLine(), out x);
+                network.Compute(x);
+            }
+
+
+
             Console.ReadKey();
         }
-        
+
     }
 }

@@ -24,9 +24,9 @@ namespace SISE_TWO
         public NeuralNet()
         {
             numNeurons = 100;
-            numInputData = 5;
-            numOutputData = 5;
-            numLearnNeurons = 5;
+            numInputData = 15;
+            numOutputData = 15;
+            numLearnNeurons = 15;
             learnRate = 0.0001;
             inputData = new double[numInputData];
             expectedOutput = new double[numOutputData];
@@ -42,6 +42,16 @@ namespace SISE_TWO
             {
                 inputData[i] = (double)rand.Next(1, 100) + (double)rand.Next(1, 10) / 10;
                 expectedOutput[i] = Math.Sqrt(inputData[i]);
+                //if(i == 0)
+                //{
+                //    inputData[i] = 1;
+                //    expectedOutput[i] = Math.Sqrt(1);
+                //}
+                //if (i == 1)
+                //{
+                //    inputData[i] = 2;
+                //    expectedOutput[i] = Math.Sqrt(2);
+                //}
             }
             for (int i = 0; i < numNeurons; i++)
             {
@@ -56,7 +66,7 @@ namespace SISE_TWO
             }
 
         }
-        
+        double[] values;
 
         public void Run(int iter)
         {
@@ -65,7 +75,7 @@ namespace SISE_TWO
                 double error = 0.0;
                 for (int j = 0; j < numInputData; j++)
                 {
-                    double[] values = new double[numNeurons];
+                    values = new double[numNeurons];
                     Train(j, values);
                     error += Math.Pow(outputData[j] - expectedOutput[j], 2);
                     AdjustWeights(j, values);
@@ -98,6 +108,27 @@ namespace SISE_TWO
             }
         }
 
+        public void Compute(double x)
+        {
+            double outpt;
+            for (int i = 0; i < numNeurons; i++)//neuron
+            {
+                values[i] = 0.0;
+                for (int j = 0; j < numLearnNeurons; j++)//weight
+                {
+                    values[i] += x * inputWeights[j, i];
+                }
+                values[i] = Sigmoid.Func(values[i]);
+            }
+            outpt = 0.0;
+            for (int i = 0; i < numNeurons; i++)
+            {
+                outpt += hiddenWeights[i] * values[i];
+            }
+
+            Console.WriteLine(outpt);
+        }
+
         public void AdjustWeights(int inputIndex, double[] inputs)
         {
             for (int i = 0; i < numNeurons; i++)
@@ -108,6 +139,33 @@ namespace SISE_TWO
                     inputWeights[j, i] -= (outputData[inputIndex] - expectedOutput[inputIndex]) * Sigmoid.Derivative(inputs[i]) * hiddenWeights[i] * outputData[inputIndex] * learnRate;
                 }
             }
+        }
+
+        public void Compute(double[] inputs, int inputIndex)
+        {
+            //double output=0;
+
+            //for (int i = 0; i < numNeurons; i++)//neuron
+            //{
+            //    inputs[i] = 0.0;
+            //    for (int j = 0; j < numLearnNeurons; j++)//weight
+            //    {
+            //        inputs[i] += inputData[inputIndex] * inputWeights[j, i];
+            //    }
+            //    inputs[i] = Sigmoid.Func(inputs[i]);
+            //}
+            //outputData[inputIndex] = 0.0;
+            //for (int i = 0; i < numNeurons; i++)
+            //{
+            //    outputData[inputIndex] += hiddenWeights[i] * inputs[i];
+            //}
+
+            //Console.WriteLine(output.ToString());
+        }
+
+        public void Write()
+        {
+            Console.WriteLine(outputData[0]);
         }
     }
 }
