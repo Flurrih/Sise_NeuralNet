@@ -126,7 +126,7 @@ namespace SISE_TWO
                 outpt += hiddenWeights[i] * values[i];
             }
 
-            Console.WriteLine(outpt);
+            Console.WriteLine("input = " + x.ToString("0.0000") + " result = "+ outpt + " error = " + Math.Abs(((Math.Sqrt(x) - outpt) / outpt) * 100).ToString("0.0000"));
         }
 
         public void AdjustWeights(int inputIndex, double[] inputs)

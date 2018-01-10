@@ -10,17 +10,31 @@ namespace CodingBackProp
             network.GenerateRandom();
             network.Run(50000);
 
-            double x;
+            int n;
 
-            while (true)
+            Console.WriteLine("Podaj ile liczb wylosowac:");
+            Int32.TryParse(Console.ReadLine(), out n);
+
+            double[] tab = GenereteInput(n);
+
+            for(int i = 0; i < n; i++)
             {
-                Double.TryParse(Console.ReadLine(), out x);
-                network.Compute(x);
+                network.Compute(tab[i]);
             }
 
-
-
             Console.ReadKey();
+        }
+
+        static double[] GenereteInput(int inputNumber)
+        {
+            Random rand = new Random();
+            double[] tab = new double[inputNumber];
+
+            for (int i = 0; i < inputNumber; i++)
+            {
+                tab[i] = (double)rand.Next(1, 100) + (double)rand.Next(1, 10) / 10;
+            }
+            return tab;
         }
 
     }
